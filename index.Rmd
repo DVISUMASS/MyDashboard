@@ -1,0 +1,46 @@
+---
+title: "My Dashbord at DACSS"
+bibliography : testVisual.bib
+output: 
+  flexdashboard::flex_dashboard:
+    orientation: columns
+---
+
+```{r setup, include=FALSE}
+library(flexdashboard) # always
+```
+
+## Intro {.sidebar}
+
+Preparing the dashboard based on the instructions given at @magallanes_reyes_data_2022, and @sievert_flexdashboard_2022.
+
+### References
+<div id="refs"></div>
+
+## Column {data-width="450"}
+
+### Bar Plot: Distribution of Washington Public Schools by Suburb Size (2019)
+
+```{r}
+readRDS("~/Desktop/MyDashboard/del1Draft.rds")
+```
+
+### Worst histogram 
+
+```{r}
+#readRDS("del2Draft.rds")
+```
+
+## Column {data-width="550"}
+
+### Worst scatterplot
+
+```{r}
+#readRDS("del3Draft.rds")
+```
+
+### Worst map
+
+```{r}
+#readRDS("del4Draft.rds")
+```
