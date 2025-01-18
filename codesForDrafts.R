@@ -99,6 +99,8 @@ del2Draft = Base + theme(axis.text.y = element_text(size=7,angle = 20)) +
             nudge_y = 4) +
   labs(title= "Frequency of MA State Police Arrest Offense UCR Codes by Race",
        subtitle = "From January 2019 to March 2020",
+  labs(title= "MV : Most Common UCR Code among all Races",
+       subtitle = "Frequency of MA State Police Arrest Offense UCR Codes by Race from January 2019 to March 2020",
        caption = "Source : Mass.gov",
        x="",y="Percent (%)")
 
