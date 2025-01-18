@@ -64,10 +64,46 @@ saveRDS(del1Draft, file = "del1Draft.rds")
 
 
 # deliverable 2 ----------------------------------------------------------
+linkMass="https://github.com/DACSS-Visual/tabular_bivar_catcat/raw/refs/heads/main/data/MSP%20DFS%20Arrests%2019-20Q1.xlsx"
+
+library(rio)
+arrests=rio::import(linkMass,which = 1)
+head(arrests)
+names(arrests)
+(Coderace=table(arrests$`Arrest Offense by UCR Code`,arrests$Race))
+library(magrittr) # for %>%
+(mgCol=prop.table(Coderace,
+                            margin = 2)%>%round(.,3))
+mgCol
+
+Racedf=as.data.frame(Coderace)
+names(Racedf)=c("ucr","race","counts")
+Racedf$pctCol=100*as.data.frame(mgCol)[,3]
+Racedf
+## 
 
 del2Draft= base + geom_histogram(aes(x=Student.Teacher.Ratio))
 del2Draft
+library(ggplot2)
+baseRE  = ggplot(Racedf, 
+                 aes(x = reorder(ucr, pctCol), #here
+                     y = pctCol ) ) + theme_minimal()
 
+barsRE = baseRE + geom_bar( stat = "identity" ) 
+Base = barsRE + facet_grid( ~ race) 
+Base = Base + coord_flip() 
+
+del2Draft = Base + theme(axis.text.y = element_text(size=7,angle = 20)) + 
+  geom_text(aes(label=ifelse(pctCol>5,# condition to annotate
+                             pctCol,"")),
+            nudge_y = 4) +
+  labs(title= "Frequency of MA State Police Arrest Offense UCR Codes by Race",
+       subtitle = "From January 2019 to March 2020",
+       caption = "Source : Mass.gov",
+       x="",y="Percent (%)")
+
+del2Draft
+readRDS("del2Draft.rds")
 
 # save del2Draft ----------------------------------------------------------
 saveRDS(del2Draft, file = "del2Draft.rds")

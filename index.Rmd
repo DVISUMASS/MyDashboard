@@ -1,6 +1,5 @@
 ---
 title: "My Dashbord at DACSS"
-bibliography : testVisual.bib
 output: 
   flexdashboard::flex_dashboard:
     orientation: columns
@@ -26,9 +25,11 @@ readRDS("~/Desktop/MyDashboard/del1Draft.rds")
 ```
 
 ### Worst histogram 
+### Bar plot :  Frequency of MA State Police Arrest Offense UCR Codes by Race
 
 ```{r}
 #readRDS("del2Draft.rds")
+readRDS("~/Desktop/MyDashboard/del2Draft.rds")
 ```
 
 ## Column {data-width="550"}
