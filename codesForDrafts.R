@@ -116,6 +116,64 @@ saveRDS(del2Draft, file = "del2Draft.rds")
 del3Draft= base + geom_point(aes(x=Student.Teacher.Ratio,
                                  y=Free.Lunch))
 del3Draft 
+##DATA
+LinkBoston = "https://github.com/DACSS-Visual/SpatialData/raw/refs/heads/main/data/BostonContrib.xlsx"
+bostonCont=rio::import(LinkBoston)
+head(bostonCont)
+names(bostonCont)
+str(bostonCont,width = 60, strict.width = 'cut')
+
+
+
+
+##ZIPCODE DATA
+library(sf)
+linkZips='https://raw.githubusercontent.com/DACSS-Visual/SpatialData/refs/heads/main/data/zip_codes.json'
+BostonZips=sf::read_sf(linkZips)
+head(BostonZips)
+plot = plot(BostonZips[2])
+names(BostonZips)
+
+
+table(bostonCont$'Tender Type Description')
+filtered_data <- bostonCont %>%
+  filter(`Tender Type Description` %in% c("Cash", "Credit Card"))
+head(filtered_data)
+table(filtered_data$'Tender Type Description')
+names(filtered_data)
+
+
+aggdata2= filtered_data %>%
+  group_by(Zip, `Tender Type Description`) %>%
+  summarise_at(vars(Amount),
+               list(counts=length,
+                    amountPerCap=mean))
+
+
+length(setdiff(aggdata2$Zip, BostonZips$ZIP5))
+length(setdiff(BostonZips$ZIP5,aggdata2$Zip))
+
+contrib_zipMap2=merge(BostonZips,aggdata2,
+                     by.x='ZIP5', # 
+                     by.y='Zip')
+head(contrib_zipMap2)
+
+base=ggplot() + theme_void() 
+del3Draft= base + geom_sf(data=contrib_zipMap2,
+               aes(fill=amountPerCap)) + 
+  scale_fill_viridis_c(direction = -1,
+                       na.value = 'red') + # missing in red?
+  facet_grid(~`Tender Type Description`) +
+  labs(fill='Contribution of Tender Type \nby Zip Code',
+       title='Credit Card Contributions More Popular than Cash in Boston',
+       subtitle='Boston MA Zip Codes')
+
+
+
+
+
+del3Draft
+
 
 # save del3Draft ----------------------------------------------------------
 saveRDS(del3Draft, file = "del3Draft.rds")
