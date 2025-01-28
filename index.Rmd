@@ -44,4 +44,5 @@ readRDS("~/Desktop/MyDashboard/del2Draft.rds")
 
 ```{r}
 #readRDS("del4Draft.rds")
+readRDS("~/Desktop/MyDashboard/del3Draft.rds")
 ```
