@@ -41,6 +41,7 @@ readRDS("~/Desktop/MyDashboard/del2Draft.rds")
 ```
 
 ### Worst map
+### Map
 
 ```{r}
 #readRDS("del4Draft.rds")
